@@ -16,6 +16,9 @@ export default function WeddingInvitation() {
   const [formStatus, setFormStatus] = useState('Hadir')
   const [formMessage, setFormMessage] = useState('')
 
+  // State untuk tombol salin amplop digital
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
+
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
@@ -38,7 +41,8 @@ export default function WeddingInvitation() {
       try { setComments(JSON.parse(saved)) } catch (e) {}
     }
 
-    audioRef.current = new Audio('https://assets.mixkit.co/music/preview/mixkit-romantic-serenade-487.mp3')
+    // Menggunakan file lagu lokal di folder public (public/music.mp3)
+    audioRef.current = new Audio('/music.mp3')
     audioRef.current.loop = true
 
     const targetDate = new Date('2026-11-24T08:00:00').getTime()
@@ -85,6 +89,12 @@ export default function WeddingInvitation() {
     localStorage.setItem('wedding_comments_fikri_arsya', JSON.stringify(updated))
     setFormMessage('')
     alert('Terima kasih! Konfirmasi kehadiran berhasil dikirim.')
+  }
+
+  const handleCopy = (text: string, index: number) => {
+    navigator.clipboard.writeText(text)
+    setCopiedIndex(index)
+    setTimeout(() => setCopiedIndex(null), 2000)
   }
 
   return (
@@ -301,7 +311,53 @@ export default function WeddingInvitation() {
           </div>
         </div>
 
-        {/* 6. BUKU TAMU & RSVP */}
+        {/* 6. AMPLOP DIGITAL & GIFT */}
+        <div className="w-full px-6 py-12 space-y-6 text-left bg-white">
+          <div className="text-center space-y-1">
+            <p className="text-stone-400 tracking-[0.3em] uppercase text-[10px] font-semibold">TANDA KASIH</p>
+            <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Amplop Digital</h3>
+            <p className="text-xs text-stone-500 max-w-xs mx-auto pt-1">
+              Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless.
+            </p>
+          </div>
+
+          <div className="space-y-4 pt-2">
+            {[
+              { bank: "BCA", holder: "Fikri Dimastian", number: "1234567890" },
+              { bank: "DANA", holder: "Arsya Insyirah R", number: "081234567890" }
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                whileHover={{ scale: 1.01 }}
+                className="bg-[#fcfbfa] border border-stone-200/80 p-6 rounded-3xl shadow-sm space-y-3 relative overflow-hidden"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold uppercase tracking-widest text-stone-900">{item.bank}</span>
+                  <div className="w-8 h-8 rounded-full bg-stone-900 text-white flex items-center justify-center text-xs font-serif italic">
+                    {item.bank[0]}
+                  </div>
+                </div>
+                
+                <div className="space-y-0.5">
+                  <p className="text-[10px] text-stone-400 uppercase tracking-widest">Nomor Rekening / Akun</p>
+                  <p className="text-base font-bold text-stone-900 tracking-wider font-mono">{item.number}</p>
+                </div>
+
+                <div className="flex justify-between items-center pt-2 border-t border-stone-100">
+                  <p className="text-xs text-stone-600 font-medium">a.n. {item.holder}</p>
+                  <button
+                    onClick={() => handleCopy(item.number, idx)}
+                    className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white text-[10px] font-semibold uppercase tracking-widest rounded-xl transition-all shadow-sm cursor-pointer"
+                  >
+                    {copiedIndex === idx ? 'Berhasil Disalin! ✓' : 'Salin Rekening'}
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* 7. BUKU TAMU & RSVP */}
         <div className="w-full px-6 py-12 space-y-6 text-left bg-[#fcfbfa]/60">
           <div className="text-center space-y-1">
             <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Buku Tamu</h3>
