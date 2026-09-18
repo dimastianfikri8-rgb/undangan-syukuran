@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 export default function WeddingInvitation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,7 +20,6 @@ export default function WeddingInvitation() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
-    // Load Google Fonts Playfair Display & Plus Jakarta Sans
     const link = document.createElement('link')
     link.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap'
     link.rel = 'stylesheet'
@@ -41,7 +41,6 @@ export default function WeddingInvitation() {
     audioRef.current = new Audio('https://assets.mixkit.co/music/preview/mixkit-romantic-serenade-487.mp3')
     audioRef.current.loop = true
 
-    // Target Tanggal: 24 November 2026 Pukul 08:00 WIB
     const targetDate = new Date('2026-11-24T08:00:00').getTime()
     const interval = setInterval(() => {
       const now = new Date().getTime()
@@ -91,9 +90,19 @@ export default function WeddingInvitation() {
   return (
     <main className="min-h-screen bg-[#f7f5f0] text-[#2c2a29] relative selection:bg-stone-200 overflow-x-hidden flex flex-col items-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       
-      {/* ================= COVER / AMPLOP PEMBUKA ================= */}
-      <div className={`fixed inset-0 z-50 bg-[#f7f5f0]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center transition-all duration-700 ease-out ${isOpen ? 'opacity-0 scale-110 pointer-events-none' : 'opacity-100 scale-100'}`}>
-        <div className="max-w-md w-full bg-white border border-stone-200/90 p-8 rounded-[2rem] shadow-2xl space-y-6">
+      {/* ================= COVER / AMPLOP PEMBUKA DENGAN EFEK FADE ================= */}
+      <motion.div 
+        initial={{ opacity: 1 }}
+        animate={{ opacity: isOpen ? 0 : 1, pointerEvents: isOpen ? 'none' : 'auto' }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+        className="fixed inset-0 z-50 bg-[#f7f5f0]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center"
+      >
+        <motion.div 
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="max-w-md w-full bg-white border border-stone-200/90 p-8 rounded-[2rem] shadow-2xl space-y-6"
+        >
           <div className="w-20 h-20 mx-auto rounded-full bg-[#f7f5f0] border border-stone-300/60 flex items-center justify-center text-stone-800 text-2xl tracking-widest shadow-inner" style={{ fontFamily: "'Playfair Display', serif" }}>
             F & A
           </div>
@@ -111,8 +120,8 @@ export default function WeddingInvitation() {
           >
             Buka Undangan
           </button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* ================= KONTEN UTAMA ================= */}
       <div className="w-full max-w-[480px] bg-white min-h-screen shadow-2xl relative flex flex-col items-center text-center pb-24 border-x border-stone-200/40">
@@ -121,7 +130,13 @@ export default function WeddingInvitation() {
         <div className="w-full relative px-6 pt-10 pb-6 space-y-6">
           <p className="text-stone-400 tracking-[0.3em] uppercase text-[10px] font-semibold">THE WEDDING OF</p>
           
-          <div className="relative w-full rounded-3xl overflow-hidden shadow-xl border border-stone-100">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative w-full rounded-3xl overflow-hidden shadow-xl border border-stone-100"
+          >
             <img 
               src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800" 
               alt="Fikri & Arsya" 
@@ -132,31 +147,34 @@ export default function WeddingInvitation() {
               <h2 className="text-4xl font-normal tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>Fikri & Arsya</h2>
               <p className="text-[11px] text-stone-200 tracking-[0.2em] uppercase font-medium">Selasa, 24 November 2026</p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Countdown timer */}
           <div className="grid grid-cols-4 gap-2.5 pt-2">
-            <div className="bg-[#fcfbfa] border border-stone-200/80 p-3.5 rounded-2xl shadow-sm">
-              <span className="block text-2xl font-bold text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>{timeLeft.days}</span>
-              <span className="text-[9px] text-stone-400 uppercase tracking-widest font-semibold">Hari</span>
-            </div>
-            <div className="bg-[#fcfbfa] border border-stone-200/80 p-3.5 rounded-2xl shadow-sm">
-              <span className="block text-2xl font-bold text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>{timeLeft.hours}</span>
-              <span className="text-[9px] text-stone-400 uppercase tracking-widest font-semibold">Jam</span>
-            </div>
-            <div className="bg-[#fcfbfa] border border-stone-200/80 p-3.5 rounded-2xl shadow-sm">
-              <span className="block text-2xl font-bold text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>{timeLeft.minutes}</span>
-              <span className="text-[9px] text-stone-400 uppercase tracking-widest font-semibold">Menit</span>
-            </div>
-            <div className="bg-[#fcfbfa] border border-stone-200/80 p-3.5 rounded-2xl shadow-sm">
-              <span className="block text-2xl font-bold text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>{timeLeft.seconds}</span>
-              <span className="text-[9px] text-stone-400 uppercase tracking-widest font-semibold">Detik</span>
-            </div>
+            {['Hari', 'Jam', 'Menit', 'Detik'].map((label, idx) => {
+              const val = [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds][idx]
+              return (
+                <motion.div 
+                  key={label}
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-[#fcfbfa] border border-stone-200/80 p-3.5 rounded-2xl shadow-sm"
+                >
+                  <span className="block text-2xl font-bold text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>{val}</span>
+                  <span className="text-[9px] text-stone-400 uppercase tracking-widest font-semibold">{label}</span>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
 
         {/* 2. QUOTE / AYAT */}
-        <div className="w-full px-8 py-12 space-y-5 bg-[#fcfbfa]/50">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="w-full px-8 py-12 space-y-5 bg-[#fcfbfa]/50"
+        >
           <div className="w-12 h-12 mx-auto border border-stone-300 rounded-full flex items-center justify-center text-stone-700 text-xs shadow-sm" style={{ fontFamily: "'Playfair Display', serif" }}>
             F&A
           </div>
@@ -164,11 +182,17 @@ export default function WeddingInvitation() {
             "Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya..."
           </blockquote>
           <p className="text-[11px] text-stone-400 uppercase tracking-widest font-semibold">(QS. Ar-Rum: 21)</p>
-        </div>
+        </motion.div>
 
         {/* 3. PROFIL MEMPELAI */}
         <div className="w-full px-6 py-10 space-y-12">
-          <div className="space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4"
+          >
             <div className="w-44 h-44 mx-auto rounded-3xl overflow-hidden shadow-lg border-2 border-stone-200/80">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" alt="Fikri" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
@@ -176,11 +200,17 @@ export default function WeddingInvitation() {
               <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Fikri Dimastian</h3>
               <p className="text-xs text-stone-500 font-medium">Putra dari Bpk. ... & Ibu ...</p>
             </div>
-          </div>
+          </motion.div>
 
           <div className="w-12 h-[1px] bg-stone-200 mx-auto"></div>
 
-          <div className="space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4"
+          >
             <div className="w-44 h-44 mx-auto rounded-3xl overflow-hidden shadow-lg border-2 border-stone-200/80">
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" alt="Arsya" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
@@ -188,7 +218,7 @@ export default function WeddingInvitation() {
               <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Arsya Insyirah R</h3>
               <p className="text-xs text-stone-500 font-medium">Putri dari Bpk. ... & Ibu ...</p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* 4. RANGKAIAN ACARA & MAPS */}
@@ -196,7 +226,6 @@ export default function WeddingInvitation() {
           <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Wedding Events</h3>
           <div className="space-y-4 text-left">
             
-            {/* Akad */}
             <div className="bg-white border border-stone-200/80 p-6 rounded-3xl space-y-2 shadow-sm">
               <div className="flex justify-between items-center">
                 <p className="text-[10px] text-stone-400 uppercase tracking-widest font-semibold">Akad Nikah</p>
@@ -209,7 +238,6 @@ export default function WeddingInvitation() {
               </p>
             </div>
 
-            {/* Resepsi */}
             <div className="bg-white border border-stone-200/80 p-6 rounded-3xl space-y-2 shadow-sm">
               <div className="flex justify-between items-center">
                 <p className="text-[10px] text-stone-400 uppercase tracking-widest font-semibold">Resepsi</p>
@@ -222,15 +250,14 @@ export default function WeddingInvitation() {
               </p>
             </div>
 
-            {/* GOOGLE MAPS EMBED & BUTTON */}
+            {/* MAPS SECTION */}
             <div className="bg-white border border-stone-200/80 p-4 rounded-3xl space-y-3 shadow-sm text-center pt-6">
               <p className="text-xs font-bold text-stone-900 uppercase tracking-wider">Peta Lokasi Acara</p>
               <p className="text-[11px] text-stone-500">Gedung Serbaguna / Kediaman Mempelai</p>
               
-              {/* Embed Google Maps */}
               <div className="w-full h-52 rounded-2xl overflow-hidden border border-stone-200 shadow-inner">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.2931!3d-6.3156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69762142e977c7%3A0x3027a76e352be40!2sKarawang%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1650000000000!5m2!1sen!2sid" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.832742918809!2d107.456!3d-6.312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTgnNDMuMiJTIDEwN8KwMjcnMjEuNiJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0 }} 
@@ -240,9 +267,8 @@ export default function WeddingInvitation() {
                 </iframe>
               </div>
 
-              {/* Tombol Buka Google Maps */}
               <a 
-                href="https://maps.app.goo.gl/example" 
+                href="https://maps.google.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="block w-full py-3 bg-stone-100 hover:bg-stone-200 text-stone-900 text-xs font-semibold uppercase tracking-[0.15em] rounded-2xl transition-all shadow-sm border border-stone-200"
@@ -258,18 +284,20 @@ export default function WeddingInvitation() {
         <div className="w-full px-6 py-10 space-y-5">
           <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Galeri Foto</h3>
           <div className="grid grid-cols-2 gap-3.5">
-            <div className="overflow-hidden rounded-2xl shadow-sm border border-stone-100">
-              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=400" className="w-full h-44 object-cover hover:scale-105 transition-transform duration-500" alt="Galeri 1" />
-            </div>
-            <div className="overflow-hidden rounded-2xl shadow-sm border border-stone-100">
-              <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=400" className="w-full h-44 object-cover hover:scale-105 transition-transform duration-500" alt="Galeri 2" />
-            </div>
-            <div className="overflow-hidden rounded-2xl shadow-sm border border-stone-100">
-              <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=400" className="w-full h-44 object-cover hover:scale-105 transition-transform duration-500" alt="Galeri 3" />
-            </div>
-            <div className="overflow-hidden rounded-2xl shadow-sm border border-stone-100">
-              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&q=80&w=400" className="w-full h-44 object-cover hover:scale-105 transition-transform duration-500" alt="Galeri 4" />
-            </div>
+            {[
+              "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=400",
+              "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=400",
+              "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=400",
+              "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&q=80&w=400"
+            ].map((img, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ scale: 1.03 }}
+                className="overflow-hidden rounded-2xl shadow-sm border border-stone-100"
+              >
+                <img src={img} className="w-full h-44 object-cover" alt={`Galeri ${i+1}`} />
+              </motion.div>
+            ))}
           </div>
         </div>
 
@@ -347,7 +375,9 @@ export default function WeddingInvitation() {
 
       {/* FLOATING MUSIC BUTTON */}
       {isOpen && (
-        <button
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
           onClick={toggleMusic}
           className="fixed bottom-6 right-6 z-40 bg-stone-900 hover:bg-stone-800 text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-pointer border border-stone-700"
           title={isPlaying ? "Matikan Musik" : "Putar Musik"}
@@ -362,7 +392,7 @@ export default function WeddingInvitation() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
             </svg>
           )}
-        </button>
+        </motion.button>
       )}
 
     </main>
