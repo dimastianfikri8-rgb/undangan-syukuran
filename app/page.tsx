@@ -8,18 +8,18 @@ export default function WeddingInvitation() {
   const [guestName, setGuestName] = useState('Tamu Undangan')
   
   const [comments, setComments] = useState([
-    { name: 'Rian Pratama', status: 'Hadir', message: 'Barakallah Habib & Adiba! Semoga sakinah mawaddah warahmah.' },
-    { name: 'Siti Rahma', status: 'Hadir', message: 'Happy wedding! Lancar sampai hari H ya kalian.' }
+    { name: 'Rian Pratama', status: 'Hadir', message: 'Barakallah Fikri & Arsya! Semoga sakinah mawaddah warahmah.' },
+    { name: 'Siti Rahma', status: 'Hadir', message: 'Happy wedding! Lancar sampai hari H ya kalian berdua.' }
   ])
   const [formName, setFormName] = useState('')
   const [formStatus, setFormStatus] = useState('Hadir')
   const [formMessage, setFormMessage] = useState('')
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [timeLeft, setTimeLeft] = useState({ days: 100, hours: 7, minutes: 8, seconds: 4 })
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
-    // Load Google Fonts secara dinamis ke head agar font-nya keren
+    // Load Google Fonts Playfair Display & Plus Jakarta Sans
     const link = document.createElement('link')
     link.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap'
     link.rel = 'stylesheet'
@@ -33,7 +33,7 @@ export default function WeddingInvitation() {
       setFormName(decoded)
     }
 
-    const saved = localStorage.getItem('wedding_comments_habib_adiba')
+    const saved = localStorage.getItem('wedding_comments_fikri_arsya')
     if (saved) {
       try { setComments(JSON.parse(saved)) } catch (e) {}
     }
@@ -41,7 +41,8 @@ export default function WeddingInvitation() {
     audioRef.current = new Audio('https://assets.mixkit.co/music/preview/mixkit-romantic-serenade-487.mp3')
     audioRef.current.loop = true
 
-    const targetDate = new Date('2026-12-28T08:00:00').getTime()
+    // Target Tanggal: 24 November 2026 Pukul 08:00 WIB
+    const targetDate = new Date('2026-11-24T08:00:00').getTime()
     const interval = setInterval(() => {
       const now = new Date().getTime()
       const diff = targetDate - now
@@ -82,7 +83,7 @@ export default function WeddingInvitation() {
     const newEntry = { name: formName, status: formStatus, message: formMessage }
     const updated = [newEntry, ...comments]
     setComments(updated)
-    localStorage.setItem('wedding_comments_habib_adiba', JSON.stringify(updated))
+    localStorage.setItem('wedding_comments_fikri_arsya', JSON.stringify(updated))
     setFormMessage('')
     alert('Terima kasih! Konfirmasi kehadiran berhasil dikirim.')
   }
@@ -90,15 +91,15 @@ export default function WeddingInvitation() {
   return (
     <main className="min-h-screen bg-[#f7f5f0] text-[#2c2a29] relative selection:bg-stone-200 overflow-x-hidden flex flex-col items-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       
-      {/* ================= COVER / AMPLOPH EFEK HALUS ================= */}
+      {/* ================= COVER / AMPLOP PEMBUKA ================= */}
       <div className={`fixed inset-0 z-50 bg-[#f7f5f0]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center transition-all duration-700 ease-out ${isOpen ? 'opacity-0 scale-110 pointer-events-none' : 'opacity-100 scale-100'}`}>
-        <div className="max-w-md w-full bg-white border border-stone-200/90 p-8 rounded-[2rem] shadow-2xl space-y-6 transform transition-all duration-700 animate-fade-in">
+        <div className="max-w-md w-full bg-white border border-stone-200/90 p-8 rounded-[2rem] shadow-2xl space-y-6">
           <div className="w-20 h-20 mx-auto rounded-full bg-[#f7f5f0] border border-stone-300/60 flex items-center justify-center text-stone-800 text-2xl tracking-widest shadow-inner" style={{ fontFamily: "'Playfair Display', serif" }}>
-            H & A
+            F & A
           </div>
           <div className="space-y-1">
             <p className="text-stone-400 tracking-[0.3em] uppercase text-[10px] font-semibold">THE WEDDING OF</p>
-            <h1 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Habib & Adiba</h1>
+            <h1 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Fikri & Arsya</h1>
           </div>
           <div className="p-4 bg-[#fcfbfa] rounded-2xl border border-stone-200/60 space-y-1 shadow-sm">
             <p className="text-[10px] text-stone-400 uppercase tracking-widest font-medium">Kepada Yth:</p>
@@ -113,7 +114,7 @@ export default function WeddingInvitation() {
         </div>
       </div>
 
-      {/* ================= KONTEN UTAMA (MOBILE WRAPPER ELEGANT) ================= */}
+      {/* ================= KONTEN UTAMA ================= */}
       <div className="w-full max-w-[480px] bg-white min-h-screen shadow-2xl relative flex flex-col items-center text-center pb-24 border-x border-stone-200/40">
 
         {/* 1. HERO SECTION */}
@@ -123,13 +124,13 @@ export default function WeddingInvitation() {
           <div className="relative w-full rounded-3xl overflow-hidden shadow-xl border border-stone-100">
             <img 
               src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800" 
-              alt="Habib & Adiba" 
+              alt="Fikri & Arsya" 
               className="w-full h-[460px] object-cover hover:scale-105 transition-transform duration-1000 ease-out"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
             <div className="absolute bottom-8 inset-x-6 text-white space-y-1.5">
-              <h2 className="text-4xl font-normal tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>Habib & Adiba</h2>
-              <p className="text-[11px] text-stone-200 tracking-[0.2em] uppercase font-medium">Senin, 28 Desember 2026</p>
+              <h2 className="text-4xl font-normal tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>Fikri & Arsya</h2>
+              <p className="text-[11px] text-stone-200 tracking-[0.2em] uppercase font-medium">Selasa, 24 November 2026</p>
             </div>
           </div>
 
@@ -157,7 +158,7 @@ export default function WeddingInvitation() {
         {/* 2. QUOTE / AYAT */}
         <div className="w-full px-8 py-12 space-y-5 bg-[#fcfbfa]/50">
           <div className="w-12 h-12 mx-auto border border-stone-300 rounded-full flex items-center justify-center text-stone-700 text-xs shadow-sm" style={{ fontFamily: "'Playfair Display', serif" }}>
-            H&A
+            F&A
           </div>
           <blockquote className="text-xs text-stone-600 italic leading-relaxed max-w-sm mx-auto">
             "Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya..."
@@ -169,11 +170,11 @@ export default function WeddingInvitation() {
         <div className="w-full px-6 py-10 space-y-12">
           <div className="space-y-4">
             <div className="w-44 h-44 mx-auto rounded-3xl overflow-hidden shadow-lg border-2 border-stone-200/80">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" alt="Habib" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" alt="Fikri" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Habib Yulianto</h3>
-              <p className="text-xs text-stone-500 font-medium">Putra Kedua dari Bpk. M. Dawam & (Almh) Ibu Dewi Sudarwati</p>
+              <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Fikri Dimastian</h3>
+              <p className="text-xs text-stone-500 font-medium">Putra dari Bpk. ... & Ibu ...</p>
             </div>
           </div>
 
@@ -181,42 +182,75 @@ export default function WeddingInvitation() {
 
           <div className="space-y-4">
             <div className="w-44 h-44 mx-auto rounded-3xl overflow-hidden shadow-lg border-2 border-stone-200/80">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" alt="Adiba" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" alt="Arsya" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Adiba Putri Syahila</h3>
+              <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Arsya Insyirah R</h3>
               <p className="text-xs text-stone-500 font-medium">Putri dari Bpk. ... & Ibu ...</p>
             </div>
           </div>
         </div>
 
-        {/* 4. RANGKAIAN ACARA */}
+        {/* 4. RANGKAIAN ACARA & MAPS */}
         <div className="w-full px-6 py-12 space-y-6 bg-[#fcfbfa]/60">
           <h3 className="text-3xl font-normal text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Wedding Events</h3>
           <div className="space-y-4 text-left">
-            <div className="bg-white border border-stone-200/80 p-6 rounded-3xl space-y-2 shadow-sm hover:shadow-md transition-shadow">
+            
+            {/* Akad */}
+            <div className="bg-white border border-stone-200/80 p-6 rounded-3xl space-y-2 shadow-sm">
               <div className="flex justify-between items-center">
                 <p className="text-[10px] text-stone-400 uppercase tracking-widest font-semibold">Akad Nikah</p>
                 <span className="text-[9px] bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full uppercase font-medium">Utama</span>
               </div>
-              <p className="text-sm font-bold text-stone-900">Senin, 28 Desember 2026</p>
+              <p className="text-sm font-bold text-stone-900">Selasa, 24 November 2026</p>
               <p className="text-xs text-stone-500">Pukul 08.00 WIB - Selesai</p>
               <p className="text-xs text-stone-600 pt-3 border-t border-stone-100 flex items-center gap-1.5 font-medium">
-                <span>📍</span> Kediaman Mempelai Wanita
+                <span>📍</span> Kediaman Mempelai
               </p>
             </div>
 
-            <div className="bg-white border border-stone-200/80 p-6 rounded-3xl space-y-2 shadow-sm hover:shadow-md transition-shadow">
+            {/* Resepsi */}
+            <div className="bg-white border border-stone-200/80 p-6 rounded-3xl space-y-2 shadow-sm">
               <div className="flex justify-between items-center">
                 <p className="text-[10px] text-stone-400 uppercase tracking-widest font-semibold">Resepsi</p>
                 <span className="text-[9px] bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full uppercase font-medium">Perayaan</span>
               </div>
-              <p className="text-sm font-bold text-stone-900">Senin, 28 Desember 2026</p>
-              <p className="text-xs text-stone-500">Pukul 10.00 WIB - Selesai</p>
+              <p className="text-sm font-bold text-stone-900">Selasa, 24 November 2026</p>
+              <p className="text-xs text-stone-500">Pukul 11.00 WIB - Selesai</p>
               <p className="text-xs text-stone-600 pt-3 border-t border-stone-100 flex items-center gap-1.5 font-medium">
                 <span>📍</span> Gedung Serbaguna
               </p>
             </div>
+
+            {/* GOOGLE MAPS EMBED & BUTTON */}
+            <div className="bg-white border border-stone-200/80 p-4 rounded-3xl space-y-3 shadow-sm text-center pt-6">
+              <p className="text-xs font-bold text-stone-900 uppercase tracking-wider">Peta Lokasi Acara</p>
+              <p className="text-[11px] text-stone-500">Gedung Serbaguna / Kediaman Mempelai</p>
+              
+              {/* Embed Google Maps */}
+              <div className="w-full h-52 rounded-2xl overflow-hidden border border-stone-200 shadow-inner">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.2931!3d-6.3156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69762142e977c7%3A0x3027a76e352be40!2sKarawang%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1650000000000!5m2!1sen!2sid" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+
+              {/* Tombol Buka Google Maps */}
+              <a 
+                href="https://maps.app.goo.gl/example" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full py-3 bg-stone-100 hover:bg-stone-200 text-stone-900 text-xs font-semibold uppercase tracking-[0.15em] rounded-2xl transition-all shadow-sm border border-stone-200"
+              >
+                Buka di Google Maps 🗺️
+              </a>
+            </div>
+
           </div>
         </div>
 
@@ -281,7 +315,7 @@ export default function WeddingInvitation() {
             </div>
             <button 
               type="submit"
-              className="w-full py-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-2xl transition-all shadow-md cursor-pointer hover:scale-[1.01]"
+              className="w-full py-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-2xl transition-all shadow-md cursor-pointer"
             >
               Kirim Ucapan
             </button>
@@ -306,7 +340,7 @@ export default function WeddingInvitation() {
         {/* FOOTER */}
         <footer className="w-full py-12 bg-white text-center space-y-3 border-t border-stone-200/60">
           <p className="text-xs text-stone-500 px-6 italic" style={{ fontFamily: "'Playfair Display', serif" }}>"Merupakan suatu kehormatan dan kebahagiaan bagi kami..."</p>
-          <p className="text-lg font-normal text-stone-900 tracking-wider pt-2" style={{ fontFamily: "'Playfair Display', serif" }}>Habib & Adiba</p>
+          <p className="text-lg font-normal text-stone-900 tracking-wider pt-2" style={{ fontFamily: "'Playfair Display', serif" }}>Fikri & Arsya</p>
         </footer>
 
       </div>
