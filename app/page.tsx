@@ -91,7 +91,7 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-between p-8 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center text-center"
           >
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
 
             <div className="relative z-10 pt-12 space-y-3">
               <span className="text-amber-300 tracking-[0.3em] uppercase text-xs font-semibold">The Wedding Of</span>
@@ -100,12 +100,12 @@ export default function Home() {
               </h1>
             </div>
 
-            <div className="relative z-10 space-y-4 max-w-sm w-full bg-black/40 p-6 rounded-2xl border border-amber-500/30 backdrop-blur-md">
+            <div className="relative z-10 space-y-4 max-w-sm w-full bg-black/50 p-6 rounded-3xl border border-amber-500/30 backdrop-blur-md shadow-2xl">
               <p className="text-xs text-stone-300">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-              <h2 className="text-xl font-bold text-amber-200 capitalize">{guestName}</h2>
+              <h2 className="text-xl font-bold text-amber-200 capitalize tracking-wide">{guestName}</h2>
               <button
                 onClick={handleOpenInvitation}
-                className="w-full py-3 px-6 bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold rounded-xl transition shadow-lg shadow-amber-600/30 flex items-center justify-center gap-2 text-sm"
+                className="w-full py-3.5 px-6 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-2xl transition-all shadow-lg shadow-amber-600/30 flex items-center justify-center gap-2 text-sm transform active:scale-95"
               >
                 <Sparkles className="w-4 h-4" /> Buka Undangan
               </button>
@@ -125,23 +125,35 @@ export default function Home() {
           {/* MUSIC CONTROLLER FLOATING */}
           <button
             onClick={toggleMusic}
-            className="fixed bottom-6 right-6 z-40 p-3 bg-amber-600/80 backdrop-blur-md text-stone-950 rounded-full shadow-2xl border border-amber-300/40 hover:scale-110 transition active:scale-95"
+            className="fixed bottom-6 right-6 z-40 p-3.5 bg-amber-600/90 backdrop-blur-md text-stone-950 rounded-full shadow-2xl border border-amber-300/40 hover:scale-110 transition active:scale-95 flex items-center justify-center"
           >
             {isPlaying ? <Volume2 className="w-5 h-5 animate-pulse" /> : <VolumeX className="w-5 h-5" />}
           </button>
 
-          {/* HEADER MEMPELAI */}
+          {/* HEADER MEMPELAI & FOTO */}
           <motion.section 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center space-y-4 pt-6"
+            className="text-center space-y-6 pt-6"
           >
-            <span className="text-amber-400 tracking-[0.2em] text-xs uppercase">Walimatul &apos;Ursy</span>
-            <h1 className="text-4xl font-serif text-amber-200 font-bold">Fikri Dimastian & Arsya Insyirah R</h1>
-            <p className="text-xs text-stone-400 italic max-w-xs mx-auto leading-relaxed">
-              &quot;Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya.&quot;
-            </p>
+            <span className="text-amber-400 tracking-[0.3em] text-xs uppercase font-medium">Walimatul &apos;Ursy</span>
+            
+            {/* BINGKAI FOTO MEMPELAI */}
+            <div className="relative w-44 h-44 mx-auto rounded-full p-1.5 bg-gradient-to-tr from-amber-600 via-amber-300 to-amber-700 shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop" 
+                alt="Fikri & Arsya" 
+                className="w-full h-full object-cover rounded-full filter contrast-105"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <h1 className="text-3xl font-serif text-amber-200 font-bold">Fikri Dimastian & Arsya Insyirah R</h1>
+              <p className="text-xs text-stone-400 italic max-w-xs mx-auto leading-relaxed pt-2">
+                &quot;Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya.&quot;
+              </p>
+            </div>
           </motion.section>
 
           {/* COUNTDOWN TIMER */}
@@ -161,7 +173,7 @@ export default function Home() {
                 { label: 'Menit', val: timeLeft.minutes },
                 { label: 'Detik', val: timeLeft.seconds }
               ].map((item, idx) => (
-                <div key={idx} className="bg-stone-950/60 p-3 rounded-2xl border border-stone-800">
+                <div key={idx} className="bg-stone-950/70 p-3 rounded-2xl border border-stone-800">
                   <span className="text-2xl font-bold font-serif text-amber-300">{item.val}</span>
                   <p className="text-[10px] text-stone-400 uppercase mt-0.5">{item.label}</p>
                 </div>
@@ -183,7 +195,7 @@ export default function Home() {
 
             <div className="grid gap-4">
               {/* AKAD */}
-              <div className="p-5 bg-stone-800/40 rounded-2xl border border-amber-500/20 space-y-2">
+              <div className="p-5 bg-stone-800/40 rounded-2xl border border-amber-500/20 space-y-2 backdrop-blur-sm">
                 <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
                   <Calendar className="w-4 h-4" /> Akad Nikah
                 </div>
@@ -192,7 +204,7 @@ export default function Home() {
               </div>
 
               {/* RESEPSI */}
-              <div className="p-5 bg-stone-800/40 rounded-2xl border border-amber-500/20 space-y-2">
+              <div className="p-5 bg-stone-800/40 rounded-2xl border border-amber-500/20 space-y-2 backdrop-blur-sm">
                 <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
                   <MapPin className="w-4 h-4" /> Syukuran
                 </div>
@@ -224,7 +236,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="p-6 bg-stone-800/50 rounded-3xl border border-amber-500/20 text-center space-y-4"
+            className="p-6 bg-stone-800/50 rounded-3xl border border-amber-500/20 text-center space-y-4 backdrop-blur-sm"
           >
             <div className="flex items-center justify-center gap-2 text-amber-300 font-serif font-bold text-lg">
               <Gift className="w-5 h-5 text-amber-400" /> Amplop Digital
