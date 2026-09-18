@@ -7,7 +7,6 @@ import {
   Copy, Check, Gift, Sparkles, Clock, Send 
 } from 'lucide-react'
 import RsvpForm from '@/components/RsvpForm'
-import confetti from 'canvas-confetti'
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false)
@@ -22,7 +21,7 @@ export default function Home() {
     const to = params.get('to')
     if (to) setGuestName(to)
 
-    // Audio background (bisa ganti link musik MP3 instrumen pernikahan)
+    // Audio background
     const bgMusic = new Audio('https://assets.mixkit.co/music/preview/mixkit-romantic-wedding-413.mp3')
     bgMusic.loop = true
     setAudio(bgMusic)
@@ -76,14 +75,14 @@ export default function Home() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [targetDate])
 
   return (
     <main className="min-h-screen bg-stone-900 text-stone-100 font-sans relative overflow-hidden select-none">
       {/* BACKGROUND DEKORATIVE GRADIENT */}
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-stone-900 to-black pointer-events-none" />
 
-     {/* COVER OVERLAY ELEGANT */}
+      {/* COVER OVERLAY ELEGANT */}
       <AnimatePresence>
         {!isOpen && (
           <motion.div 
@@ -92,7 +91,6 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-between p-8 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center text-center"
           >
-            {/* Isinya tetep sama */}
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
             <div className="relative z-10 pt-12 space-y-3">
@@ -139,10 +137,10 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center space-y-4 pt-6"
           >
-            <span className="text-amber-400 tracking-[0.2em] text-xs uppercase">Walimatul 'Ursy</span>
+            <span className="text-amber-400 tracking-[0.2em] text-xs uppercase">Walimatul &apos;Ursy</span>
             <h1 className="text-4xl font-serif text-amber-200 font-bold">Fikri Dimastian & Arsya Insyirah R</h1>
             <p className="text-xs text-stone-400 italic max-w-xs mx-auto leading-relaxed">
-              "Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya."
+              &quot;Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya.&quot;
             </p>
           </motion.section>
 
@@ -238,29 +236,29 @@ export default function Home() {
             <div className="space-y-3 pt-2">
               <div className="p-4 bg-stone-900/80 rounded-2xl border border-stone-700 flex items-center justify-between">
                 <div className="text-left">
-                  <span className="text-xs font-bold text-stone-200 block">seabank</span>
+                  <span className="text-xs font-bold text-stone-200 block">SeaBank</span>
                   <span className="text-sm font-mono text-amber-300 font-bold">1234 5678 90</span>
-                  <span className="text-[10px] text-stone-400 block">a.n  Arsya Insyirah R</span>
+                  <span className="text-[10px] text-stone-400 block">a.n Arsya Insyirah R</span>
                 </div>
                 <button
-                  onClick={() => copyToClipboard('1234567890', 'seabank')}
+                  onClick={() => copyToClipboard('1234567890', 'seabank-1')}
                   className="p-2.5 bg-stone-800 hover:bg-stone-700 rounded-xl border border-stone-600 text-stone-200 transition"
                 >
-                  {copiedBank === 'bca' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  {copiedBank === 'seabank-1' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
 
               <div className="p-4 bg-stone-900/80 rounded-2xl border border-stone-700 flex items-center justify-between">
                 <div className="text-left">
-                  <span className="text-xs font-bold text-stone-200 block">Seabank</span>
+                  <span className="text-xs font-bold text-stone-200 block">SeaBank</span>
                   <span className="text-sm font-mono text-amber-300 font-bold">0987 6543 21</span>
                   <span className="text-[10px] text-stone-400 block">a.n Fikri Dimastian</span>
                 </div>
                 <button
-                  onClick={() => copyToClipboard('0987654321', 'seabank')}
+                  onClick={() => copyToClipboard('0987654321', 'seabank-2')}
                   className="p-2.5 bg-stone-800 hover:bg-stone-700 rounded-xl border border-stone-600 text-stone-200 transition"
                 >
-                  {copiedBank === 'seabank' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  {copiedBank === 'seabank-2' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
             </div>
